@@ -11,7 +11,7 @@ window.config(bg='tan')
 # initialize variables
 score = 0
 misspelled_words = 0
-time = 60
+time = 10
 count_1 = 0
 moving_words = ''
 
@@ -21,11 +21,44 @@ word = r.get_random_word(maxLength=9)
 
 def given_time():
     global time, score, misspelled_words
+    if time > 11:
+        pass
+    else:
+        time_count_label.config(fg='red')
+    if time > 0:
+        time -= 1
+        time_count_label.config(text=time)
+        time_count_label.after(1000, given_time)
+    else:
+        game_instruction_label.config(text='Hit = {} | Miss = {} | Total Score = {}'.format(score, misspelled_words, score-misspelled_words))
+        reset_board = messagebox.askretrycancel('Notification', 'Do you want to play again?')
+        if reset_board:
+            score = 0
+            misspelled_words = 0
+            time = 60
+            score_count_label.config(text=score)
+            time_count_label.config(text=time)
+            random_word_label.config(text=word)
+            game_instruction_label.place(x=135, y=500)
+            start_label.place(x=290, y=65)
+
+            word_entry.delete(0, END)
 
 
-def game():
+def game(event):
     global score, misspelled_words
-    pass
+    if time == 10:
+        given_time()
+    game_instruction_label.place_forget()
+    start_label.place_forget()
+    if word_entry.get() == random_word_label:
+        score += 1
+        score_count_label.configure(text=score)
+    else:
+        misspelled_words += 1
+    word = r.get_random_word(maxLength=9)
+    random_word_label.config(text=word)
+    word_entry.delete(0, END)
 
 
 def moving_text():
@@ -70,5 +103,8 @@ word_entry.focus_set()
 
 game_instruction_label = Label(window, text='Hit enter button after typing the word', font=('arial', 25, 'italic bold'), fg='grey')
 game_instruction_label.place(x=135, y=500)
+
+window.bind('<Return>', game)
+
 window.mainloop()
 
