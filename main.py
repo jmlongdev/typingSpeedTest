@@ -1,14 +1,13 @@
 from tkinter import *
-from timeit import default_timer as timer
 from random_word import RandomWords
 import random
+from tkinter import messagebox
 
 window = Tk()
 window.title('Typing Speed Test')
 window.geometry('824x600')
 window.config(bg='tan')
 
-# TODO: initialize the variable to keep track. score, time, number of words corrct and incorrect,
 # initialize variables
 score = 0
 misspelled_words = 0
@@ -16,10 +15,18 @@ time = 60
 count_1 = 0
 moving_words = ''
 
-# Random word instead of list
-# TODO: Word bank or list
 r = RandomWords()
 word = r.get_random_word(maxLength=9)
+
+
+def given_time():
+    global time, score, misspelled_words
+
+
+def game():
+    global score, misspelled_words
+    pass
+
 
 def moving_text():
     # animates the top text to move
@@ -34,7 +41,6 @@ def moving_text():
     moving_words_label.after(150, moving_text)
 
 
-# TODO: Create the GUi to display the type test
 moving_words_label = Label(window, text='', font=('arial', 25, 'italic bold'), fg='purple', width=40)
 moving_words_label.place(x=10, y=10)
 # create function that animates the title
