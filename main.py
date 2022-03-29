@@ -2,6 +2,7 @@ from tkinter import *
 from random_word import RandomWords
 from tkinter import messagebox
 import random
+# from words import words
 
 window = Tk()
 window.title('Typing Speed Test')
@@ -35,6 +36,7 @@ def given_time():
             score = 0
             misspelled_words = 0
             time = 60
+            start_label.config(text='Start Typing')
             score_count_label.config(text=score)
             time_count_label.config(text=time)
             random_word_label.config(text=words[0])
